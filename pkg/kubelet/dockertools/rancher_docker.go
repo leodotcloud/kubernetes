@@ -60,9 +60,9 @@ func (r *RancherDockerClient) InspectContainer(id string) (*docker.Container, er
 		return nil, err
 	}
 
-	if inspect.State.Running && isPodContainer(inspect.Config) {
-		return inspect, r.trySetIp(inspect)
-	}
+	//if inspect.State.Running && isPodContainer(inspect.Config) {
+	//	return inspect, r.trySetIp(inspect)
+	//}
 
 	return inspect, err
 }
