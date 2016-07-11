@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 set -e
 
 cd $(dirname $0)
@@ -19,11 +19,17 @@ if [ ! -e ../_output/release-tars/kubernetes-server-linux-amd64.tar.gz ]; then
 fi
 
 echo Unpacking kubernetes binaries
-tar -xvzf ../../_output/release-tars/kubernetes-server-linux-amd64.tar.gz 
+tar -xvzf ../_output/release-tars/kubernetes-server-linux-amd64.tar.gz 
 echo "Building k8s image $REPO/k8s:$TAG"
 for i in kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler; do
     cp kubernetes/server/bin/$i k8s
 done
+
+echo Unpacking cni binaries
+mkdir ../_output/cni
+wget -O ../_output/cni/ https://github.com/containernetworking/cni/releases/download/v0.3.0/cni-v0.3.0.tgz
+tar -xvfz -C ../_output/cni ../_output/cni/cni*tgz
+cp ../_output/cni/bridge k8s
 
 cd k8s
 docker build -t $REPO/k8s:$TAG .
