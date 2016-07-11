@@ -31,7 +31,7 @@ CNI_FILE=https://github.com/containernetworking/cni/releases/download/v0.3.0/cni
 if [[ ! -f ../_output/cni/cni*tgz ]]; then
     wget -O ../_output/cni/cni-v0.3.0.tgz ${CNI_FILE}
 fi
-tar xvfz ${PWD}/../_output/cni/cni*tgz -C ${PWD}/../_output/cni 
+tar -xvfz -C ../_output/cni ../_output/cni/cni*tgz
 cp ../_output/cni/bridge k8s
 
 cd k8s
